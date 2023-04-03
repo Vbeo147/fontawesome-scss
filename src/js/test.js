@@ -1,7 +1,9 @@
+const random = Math.random();
+
 const a = () => {
-  if (1) {
+  if (random === 0) {
     console.log("s");
-  } else if (0) {
+  } else {
     console.log("hello");
   }
 };

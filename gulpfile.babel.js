@@ -8,6 +8,7 @@ import minifyHtml from "gulp-minify-html";
 import gulpSass from "gulp-sass";
 import gulpNode from "node-sass";
 import browserSync from "browser-sync";
+import autoPrefixer from "gulp-autoprefixer";
 
 const sass = gulpSass(gulpNode);
 const browser = browserSync.create();
@@ -22,13 +23,14 @@ const path = {
 
 //
 
-gulp.task("minify:html", () =>
+gulp.task("minify:html", async () => {
+  deleteAsync(["./dist/html"]);
   gulp
     .src(path.src.html)
     .pipe(minifyHtml())
-    .pipe(gulp.dest("dist"))
-    .pipe(browser.reload({ stream: true }))
-);
+    .pipe(gulp.dest("./dist/html"))
+    .pipe(browser.reload({ stream: true }));
+});
 
 gulp.task("uglify:js", () =>
   gulp
@@ -39,7 +41,13 @@ gulp.task("uglify:js", () =>
         presets: ["@babel/env"],
       })
     )
-    .pipe(uglify())
+    .pipe(
+      uglify({
+        mangle: {
+          toplevel: true,
+        },
+      })
+    )
     .pipe(gulp.dest("dist"))
     .pipe(browser.reload({ stream: true }))
 );
@@ -49,6 +57,7 @@ gulp.task("uglify:scss", () =>
     .src(path.src.scss)
     .pipe(concat("style.css"))
     .pipe(sass().on("error", sass.logError))
+    .pipe(autoPrefixer())
     .pipe(minifyCSS())
     .pipe(gulp.dest("dist"))
     .pipe(browser.reload({ stream: true }))
@@ -61,7 +70,7 @@ gulp.task("compile", gulp.series(["minify:html", "uglify:js", "uglify:scss"]));
 gulp.task("server", () => {
   browser.init({
     server: {
-      baseDir: "./dist",
+      baseDir: ["./dist", "./dist/html"],
     },
   });
   gulp.watch(path.src.js, gulp.series("uglify:js"));
