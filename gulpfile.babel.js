@@ -23,14 +23,13 @@ const path = {
 
 //
 
-gulp.task("minify:html", async () => {
-  deleteAsync(["./dist/html"]);
+gulp.task("minify:html", () =>
   gulp
     .src(path.src.html)
     .pipe(minifyHtml())
     .pipe(gulp.dest("./dist/html"))
-    .pipe(browser.reload({ stream: true }));
-});
+    .pipe(browser.reload({ stream: true }))
+);
 
 gulp.task("uglify:js", () =>
   gulp
@@ -75,7 +74,10 @@ gulp.task("server", () => {
   });
   gulp.watch(path.src.js, gulp.series("uglify:js"));
   gulp.watch(path.src.scss, gulp.series("uglify:scss"));
-  gulp.watch(path.src.html, gulp.series("minify:html"));
+  gulp.watch(
+    path.src.html,
+    gulp.series(() => deleteAsync(["./dist/html"]), ["minify:html"])
+  );
 });
 
 //
