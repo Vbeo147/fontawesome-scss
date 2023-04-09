@@ -1,0 +1,73 @@
+@mixin MenuSideBtn($grow, $msg) {
+  flex-grow: $grow;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  position: relative;
+  button {
+    position: absolute;
+    border: 3px solid transparent;
+    cursor: pointer;
+    width: 60px;
+    height: 50px;
+    border-radius: 10px;
+    @if $msg == true {
+      svg {
+        &:nth-child(1) {
+          opacity: 0;
+        }
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+    &:focus {
+      border: 3px solid rgba(83, 141, 215, 0.6);
+    }
+    &:hover {
+      & svg {
+        transition: opacity 0.25s ease-in-out;
+        @if $msg == true {
+          path {
+            fill: $button-active-color;
+          }
+        }
+        &:nth-child(1) {
+          opacity: 1;
+        }
+        &:nth-child(2) {
+          opacity: 0;
+        }
+      }
+      & ~ .msg {
+        opacity: 1;
+        transform: translateX(-5px);
+      }
+    }
+  }
+  @if $msg == true {
+    .msg {
+      position: absolute;
+      right: 80px;
+      font-size: 12px;
+      background-color: #183153;
+      color: white;
+      border-radius: 2px;
+      padding: 10px;
+      opacity: 0;
+      transition: all 0.2s ease-in-out;
+      user-select: none;
+      &::before {
+        position: absolute;
+        content: "";
+        border-bottom: 7px solid transparent;
+        border-top: 7px solid transparent;
+        border-left: 7px solid #183153;
+        border-right: 7px solid transparent;
+        right: -14px;
+        top: 10px;
+      }
+    }
+  }
+}

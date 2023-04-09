@@ -1,0 +1,43 @@
+@import "_variables";
+@import "_header";
+
+:root {
+  --icon-height: 1.7em;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 1130px;
+}
+
+.menu-btn {
+  @include MenuSideBtn(1, false);
+}
+
+.login {
+  @include MenuSideBtn(8, true);
+}
+
+.menu-overview {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-grow: 1;
+  button {
+    padding: 10px 15px;
+    margin-right: 10px;
+    font-size: 16px;
+    color: #74799f;
+    cursor: pointer;
+    border: 3px solid transparent;
+    font-family: "Poppins", sans-serif;
+    &:hover {
+      color: $button-active-color;
+    }
+    &:focus {
+      border: 3px solid rgba(83, 141, 215, 0.6);
+    }
+  }
+}
