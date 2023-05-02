@@ -12,12 +12,63 @@
   max-width: 1130px;
 }
 
-.menu-btn {
-  @include MenuSideBtn(1, false);
+.menu-logo {
+  @include MenuSideBtn(1);
 }
 
-.login {
-  @include MenuSideBtn(8, true);
+.menu-login {
+  @include MenuSideBtn(8);
+  button {
+    svg {
+      &:nth-child(1) {
+        opacity: 0;
+      }
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    &:hover {
+      & svg {
+        transition: opacity 0.25s ease-in-out;
+        path {
+          fill: $button-active-color;
+        }
+        &:nth-child(1) {
+          opacity: 1;
+        }
+        &:nth-child(2) {
+          opacity: 0;
+        }
+      }
+      & ~ .msg {
+        opacity: 1;
+        transform: translateX(-5px);
+      }
+    }
+  }
+  .msg {
+    position: absolute;
+    right: 80px;
+    font-size: 12px;
+    background-color: #183153;
+    color: white;
+    border-radius: 2px;
+    padding: 10px;
+    opacity: 0;
+    transition: all 0.2s ease-in-out;
+    user-select: none;
+    &::before {
+      position: absolute;
+      content: "";
+      border-bottom: 7px solid transparent;
+      border-top: 7px solid transparent;
+      border-left: 7px solid #183153;
+      border-right: 7px solid transparent;
+      right: -14px;
+      top: 10px;
+    }
+  }
 }
 
 .menu-overview {
