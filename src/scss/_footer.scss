@@ -1,0 +1,24 @@
+@mixin FooterMenu($width, $height, $background, $hover) {
+  width: $width;
+  border-radius: 20px;
+  border: 2px solid transparent;
+  box-shadow: 0 4px 0 0 lightgrey;
+  margin-bottom: 40px;
+  cursor: pointer;
+  &:hover {
+    border-color: $hover;
+    box-shadow: 0px 4px 0 0 $hover;
+  }
+  div {
+    width: 100%;
+    height: $height;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    background-color: $background;
+  }
+  h1 {
+    font-size: 16px;
+    padding: 25px;
+    text-align: center;
+  }
+}
